@@ -1,4 +1,5 @@
-import React from "react";
+
+import HouseRow from "./houseRow";
 
 const houses = [
     {
@@ -32,15 +33,12 @@ const HouseList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {houses.map((house) => (
-                        <tr key={house.id}>
-                            <td>{house.address}</td>
-                            <td>{house.country}</td>
-                            <td>{house.price}</td>
-                        </tr>
+                    {houses.map((h) => (
+                        <HouseRow key={h.id} house={h} />
                     ))}
                 </tbody>
             </table>
+            {/* <button className="btn btn-primary" onClick={addHouse}>Add</button> */}
         </>
     );
 };
