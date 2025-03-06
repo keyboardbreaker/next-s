@@ -17,9 +17,11 @@ const houseArray = [
 ];
 
 const HouseList = () => {
-    
     const [houses, setHouses] = useState(houseArray);
-
+    //houseArray is initial value
+    //the first element in array is an object that reflects the current state
+    //the second is a function we can use to change the state
+    //the function is expected to be prefixed set
     const addHouse = () => {
         setHouses([
             ...houses,
