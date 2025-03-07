@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HouseRow from "./houseRow";
 
-const houseArray = [
-    {
-        id: 1,
-        address: "12 Valley of Kings, Geneva",
-        country: "Switzerland",
-        price: 900000,
-    },
-    {
-        id: 2,
-        address: "89 road of forks, Geneva",
-        country: "Switzerland",
-        price: 500000,
-    },
-];
+type House = {
+    id: number;
+    address: string;
+    country: string;
+    price: number;
+};
 
 const HouseList = () => {
-    const [houses, setHouses] = useState(houseArray);
+    const [houses, setHouses] = useState<House[]>([]);
+
+    useEffect(() => {
+        const fetchHouses = async () => {
+            const response = await fetch("/api/houses");
+            const houses = await response.json();
+            setHouses(houses);
+        };
+        fetchHouses();
+    });
     //houseArray is initial value
     //the first element in array is an object that reflects the current state
     //the second is a function we can use to change the state
