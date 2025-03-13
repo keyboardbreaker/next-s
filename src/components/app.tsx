@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Banner from "./banner";
-import House from "./house";
 import HouseList from "./houseList";
+import { HouseModel } from "../models/HouseModel";
+import House from "./house";
 
 const App = () => {
-    const [selectedHouse, setSelectedHouse] = useState<House | null>();
+    const [selectedHouse, setSelectedHouse] = useState<HouseModel | null>();
     return (
         <>
             <Banner />

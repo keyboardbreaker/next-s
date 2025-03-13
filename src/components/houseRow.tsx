@@ -1,16 +1,9 @@
 import currencyFormatter from "@/helpers/currencyFormatter";
-
-type House = {
-    id: number;
-    address: string;
-    country: string;
-    price: number;
-    photo: string;
-};
+import { HouseModel } from "@/models/HouseModel";
 
 type HouseRowProps = {
-    house: House;
-    selectHouse: (house: House) => void;
+    house: HouseModel;
+    selectHouse: (house: HouseModel) => void;
 }
 
 const HouseRow = ({ house, selectHouse } : HouseRowProps) => {

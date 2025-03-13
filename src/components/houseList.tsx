@@ -1,21 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import HouseRow from "./houseRow";
 import Button from "./button";
-
-type House = {
-    id: number;
-    address: string;
-    country: string;
-    price: number;
-    photo: string;
-};
+import { HouseModel } from "@/models/HouseModel";
 
 type HouseListProps = {
-    selectHouse : (house: House) => void;
+    selectHouse : (house: HouseModel) => void;
 }
 
 const HouseList = ({selectHouse}: HouseListProps) => {
-    const [houses, setHouses] = useState<House[]>([]);
+    const [houses, setHouses] = useState<HouseModel[]>([]);
     const counter = useRef(0);
 
     useEffect(() => {
