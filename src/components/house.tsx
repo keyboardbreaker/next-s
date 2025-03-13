@@ -2,6 +2,7 @@
 import defaultPhoto from "@/helpers/defaultPhoto";
 
 type House = {
+    id: number;
     address: string;
     country: string;
     price: number;

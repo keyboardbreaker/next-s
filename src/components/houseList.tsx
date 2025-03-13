@@ -7,9 +7,14 @@ type House = {
     address: string;
     country: string;
     price: number;
+    photo: string;
 };
 
-const HouseList = () => {
+type HouseListProps = {
+    selectHouse : (house: House) => void;
+}
+
+const HouseList = ({selectHouse}: HouseListProps) => {
     const [houses, setHouses] = useState<House[]>([]);
     const counter = useRef(0);
 
@@ -34,6 +39,7 @@ const HouseList = () => {
                 address: "32 Valley",
                 country: "USA",
                 price: 1000000,
+                photo: ""
             }
         ]);
     };
@@ -55,7 +61,7 @@ const HouseList = () => {
                 </thead>
                 <tbody>
                     {houses.map((h) => (
-                        <HouseRow key={h.id} house={h} />
+                        <HouseRow key={h.id} house={h} selectHouse={selectHouse} />
                     ))}
                 </tbody>
             </table>

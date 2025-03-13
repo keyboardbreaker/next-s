@@ -4,14 +4,13 @@ import House from "./house";
 import HouseList from "./houseList";
 
 const App = () => {
-    const [selectedHouse, setSelectedHouse] = useState();
+    const [selectedHouse, setSelectedHouse] = useState<House | null>();
     return (
         <>
             <Banner />
-            <HouseList />
             {selectedHouse ? 
                 <House house={selectedHouse} /> : 
-                <HouseList /> 
+                <HouseList selectHouse={setSelectedHouse} /> 
             }
         </>
     );

@@ -1,14 +1,21 @@
 import currencyFormatter from "@/helpers/currencyFormatter";
 
 type House = {
+    id: number;
     address: string;
     country: string;
     price: number;
+    photo: string;
 };
 
-const HouseRow = ({ house } : { house: House }) => {
+type HouseRowProps = {
+    house: House;
+    selectHouse: (house: House) => void;
+}
+
+const HouseRow = ({ house, selectHouse } : HouseRowProps) => {
     return (
-        <tr>
+        <tr onClick={() => {selectHouse(house)}}>
             <td>{house.address}</td>
             <td>{house.country}</td>
             {house.price && //if house.price is falsy it will not evaluate passed the &&
