@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import HouseRow from "./houseRow";
 import Button from "./button";
 
@@ -11,6 +11,7 @@ type House = {
 
 const HouseList = () => {
     const [houses, setHouses] = useState<House[]>([]);
+    const counter = useRef(0);
 
     useEffect(() => {
         const fetchHouses = async () => {
@@ -19,6 +20,7 @@ const HouseList = () => {
             setHouses(houses);
         };
         fetchHouses();
+        counter.current++;
     }, []); //empty dependency array
     //houseArray is initial value
     //the first element in array is an object that reflects the current state
