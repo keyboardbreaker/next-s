@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HouseRow from "./houseRow";
+import Button from "./button";
 
 type House = {
     id: number;
@@ -56,7 +57,7 @@ const HouseList = () => {
                     ))}
                 </tbody>
             </table>
-            <button className="btn btn-primary" onClick={addHouse}>Add</button>
+            <Button label="Add House" onClick={addHouse} />
         </>
     );
 };
