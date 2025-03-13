@@ -18,7 +18,7 @@ const HouseList = () => {
             setHouses(houses);
         };
         fetchHouses();
-    });
+    }, []); //empty dependency array
     //houseArray is initial value
     //the first element in array is an object that reflects the current state
     //the second is a function we can use to change the state
