@@ -11,7 +11,8 @@ const HouseRow = ({ house } : { house: House }) => {
         <tr>
             <td>{house.address}</td>
             <td>{house.country}</td>
-            <td className={`${house.price > 500000 ? "text-primary": ""}`}>{currencyFormatter.format(house.price)}</td>
+            {house.price && //if house.price is falsy it will not evaluate passed the &&
+                (<td className={`${house.price > 500000 ? "text-primary": ""}`}>{currencyFormatter.format(house.price)}</td>)}
         </tr>
     );
 }
