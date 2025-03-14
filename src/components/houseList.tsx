@@ -1,29 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
 import HouseRow from "./houseRow";
 import Button from "./button";
 import { HouseModel } from "@/models/HouseModel";
+import useHouses from "@/hooks/useHouses";
 
 type HouseListProps = {
     selectHouse : (house: HouseModel) => void;
 }
 
 const HouseList = ({selectHouse}: HouseListProps) => {
-    const [houses, setHouses] = useState<HouseModel[]>([]);
-    const counter = useRef(0);
+    const { houses, setHouses} = useHouses(); 
+    //destructure setHouses from return { houses, setHouses};
+    //from useHouses custom hook
 
-    useEffect(() => {
-        const fetchHouses = async () => {
-            const response = await fetch("/api/houses");
-            const houses = await response.json();
-            setHouses(houses);
-        };
-        fetchHouses();
-        counter.current++;
-    }, []); //empty dependency array
-    //houseArray is initial value
-    //the first element in array is an object that reflects the current state
-    //the second is a function we can use to change the state
-    //the function is expected to be prefixed set
     const addHouse = () => {
         setHouses([
             ...houses,
