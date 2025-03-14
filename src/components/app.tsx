@@ -6,12 +6,16 @@ import House from "./house";
 
 const App = () => {
     const [selectedHouse, setSelectedHouse] = useState<HouseModel | null>();
+    const setSelectedHouseWrapper = (house: HouseModel) => {
+        setSelectedHouse(house);
+    };
+
     return (
         <>
             <Banner />
             {selectedHouse ? 
                 <House house={selectedHouse} /> : 
-                <HouseList selectHouse={setSelectedHouse} /> 
+                <HouseList selectHouse={setSelectedHouseWrapper} />
             }
         </>
     );
