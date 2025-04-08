@@ -4,6 +4,7 @@ import { HouseModel } from "@/models/HouseModel";
 import useHouses from "@/hooks/useHouses";
 import LoadingIndicator from "./loadingIndicator";
 import loadingStatus from "@/helpers/loadingStatus";
+import ErrorBoundary from "./ErrorBoundary";
 
 type HouseListProps = {
     selectHouse : (house: HouseModel) => void;
@@ -17,7 +18,7 @@ const HouseList = ({selectHouse}: HouseListProps) => {
     if(loadingState !==  loadingStatus.loaded) {
         return <LoadingIndicator loadingState={loadingState} />
     }
-    
+
     const addHouse = () => {
         setHouses([
             ...houses,
@@ -47,9 +48,11 @@ const HouseList = ({selectHouse}: HouseListProps) => {
                     </tr>
                 </thead>
                 <tbody>
+                    <ErrorBoundary fallback="Error loading house rows!">
                     {houses.map((h) => (
                         <HouseRow key={h.id} house={h} selectHouse={selectHouse} />
                     ))}
+                    </ErrorBoundary>
                 </tbody>
             </table>
             <Button label="Add House" onClick={addHouse} />
