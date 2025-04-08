@@ -1,8 +1,11 @@
 // import currencyFormatter from "@/helpers/currencyFormatter";
 import defaultPhoto from "@/helpers/defaultPhoto";
-import { HouseModel } from "@/models/HouseModel";
+import { useLocation } from "react-router";
 
-const House = ({ house }: { house: HouseModel }) => {
+const House = () => {
+    const location = useLocation();
+    const { house } = location.state;
+
     return (
         <div className="row">
             <div className="col-6">

@@ -1,16 +1,12 @@
 import HouseRow from "./houseRow";
 import Button from "./button";
-import { HouseModel } from "@/models/HouseModel";
 import useHouses from "@/hooks/useHouses";
 import LoadingIndicator from "./loadingIndicator";
 import loadingStatus from "@/helpers/loadingStatus";
 import ErrorBoundary from "./ErrorBoundary";
 
-type HouseListProps = {
-    selectHouse : (house: HouseModel) => void;
-}
 
-const HouseList = ({selectHouse}: HouseListProps) => {
+const HouseList = () => {
     const { houses, setHouses, loadingState} = useHouses(); 
     //destructure setHouses from return { houses, setHouses};
     //from useHouses custom hook
@@ -50,7 +46,7 @@ const HouseList = ({selectHouse}: HouseListProps) => {
                 <tbody>
                     <ErrorBoundary fallback="Error loading house rows!">
                     {houses.map((h) => (
-                        <HouseRow key={h.id} house={h} selectHouse={selectHouse} />
+                        <HouseRow key={h.id} house={h} />
                     ))}
                     </ErrorBoundary>
                 </tbody>

@@ -1,14 +1,16 @@
 import currencyFormatter from "@/helpers/currencyFormatter";
 import { HouseModel } from "@/models/HouseModel";
+import { useNavigate } from "react-router";
 
 type HouseRowProps = {
     house: HouseModel;
-    selectHouse: (house: HouseModel) => void;
 }
 
-const HouseRow = ({ house, selectHouse } : HouseRowProps) => {
+const HouseRow = ({ house  } : HouseRowProps) => {
+    const navigate = useNavigate();
+
     return (
-        <tr onClick={() => {selectHouse(house)}}>
+        <tr onClick={() => navigate(`/house/${house.id}`, { state: { house }})}>
             <td>{house.address}</td>
             <td>{house.country}</td>
             {house.price && //if house.price is falsy it will not evaluate passed the &&
