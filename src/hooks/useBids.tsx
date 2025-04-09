@@ -22,7 +22,25 @@ const useBids = (houseId: number) => {
         };
         fetchBids();
     }, [houseId]);
-    return { bids, setBids, loadingState};
-};
+
+    const postBid = async (bid: BidModel) => {
+        const rsp = await fetch(`/api/bids/${bid.houseId}`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(bid),
+        });
+        return await rsp.json();
+    };
+
+    const addBid = async(bid: BidModel) => {
+        const postedBid = await postBid(bid);
+        setBids([...bids, postedBid]);
+    };
+
+    return { bids, loadingState, addBid };
+}
 
 export default useBids;

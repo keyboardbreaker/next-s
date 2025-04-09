@@ -12,7 +12,7 @@ type BidsProps = {
 
 const Bids = ({house}: BidsProps) => { // (props: BidsProps); 
                                         //const house = props.house
-    const { bids, loadingState } = useBids(house.id);
+    const { bids, loadingState, addBid } = useBids(house.id);
 
     const emptyBid = {
         houseId: house.id,
@@ -28,6 +28,7 @@ const Bids = ({house}: BidsProps) => { // (props: BidsProps);
 
     const onBidSubmitClick = () => {
         //add newBid to state and persist to API
+        addBid(newBid);
         setNewBid(emptyBid);
     };
 
@@ -44,7 +45,7 @@ const Bids = ({house}: BidsProps) => { // (props: BidsProps);
                         </thead>
                         <tbody>
                             {bids.map((b: BidModel) => (
-                                <tr key={b.id}>
+                                <tr key={b.houseId}>
                                     <td>{b.bidder}</td>
                                     <td>{currencyFormatter.format(b.amount)}</td>
                                 </tr>
