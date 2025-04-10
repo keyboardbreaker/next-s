@@ -1,5 +1,5 @@
 import loadingStatus from "@/helpers/loadingStatus";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import LoadingIndicator from "./loadingIndicator";
 import currencyFormatter from "@/helpers/currencyFormatter";
 import { BidModel } from "@/models/BidModel";
@@ -13,7 +13,7 @@ type BidsProps = {
 const Bids = ({house}: BidsProps) => { // (props: BidsProps); 
                                         //const house = props.house
     const { bids, loadingState, addBid } = useBids(house.id);
-
+    const [ isPending, startTransition] = useTransition();
     const emptyBid = {
         houseId: house.id,
         bidder: "",
@@ -28,7 +28,7 @@ const Bids = ({house}: BidsProps) => { // (props: BidsProps);
 
     const onBidSubmitClick = () => {
         //add newBid to state and persist to API
-        addBid(newBid);
+        startTransition(async() => await addBid(newBid));
         setNewBid(emptyBid);
     };
 
@@ -81,7 +81,7 @@ const Bids = ({house}: BidsProps) => { // (props: BidsProps);
                     />
                 </div>
                 <div className="col-2">
-                    <button  onClick={onBidSubmitClick}>
+                    <button className="btn btn-primary" disabled={isPending} onClick={onBidSubmitClick}>
                        Add
                     </button>
                 </div>
