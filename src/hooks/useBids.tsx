@@ -1,11 +1,13 @@
 import loadingStatus from "@/helpers/loadingStatus";
 import { BidModel } from "@/models/BidModel";
-import { useEffect, useState } from "react";
+import { useEffect, useOptimistic, useState } from "react";
 
 const useBids = (houseId: number) => {
     const [bids, setBids] = useState<BidModel[]>([]);
     const [loadingState, setLoadingState] =
         useState(loadingStatus.isLoading);
+    const [optimisticBids, addOptimisticBid] = 
+        useOptimistic<BidModel[], BidModel>(bids, (bids, newBid) => [...bids, newBid]); //can only be used with actions
     
     useEffect(() => {
         const fetchBids = async () => {
@@ -36,11 +38,12 @@ const useBids = (houseId: number) => {
     };
 
     const addBid = async(bid: BidModel) => {
+        addOptimisticBid(bid);
         const postedBid = await postBid(bid);
         setBids([...bids, postedBid]);
     };
 
-    return { bids, loadingState, addBid };
+    return { bids: optimisticBids, loadingState, addBid };
 }
 
 export default useBids;
