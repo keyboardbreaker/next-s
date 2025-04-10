@@ -1,5 +1,4 @@
 import loadingStatus from "@/helpers/loadingStatus";
-import { useState, useTransition } from "react";
 import LoadingIndicator from "./loadingIndicator";
 import currencyFormatter from "@/helpers/currencyFormatter";
 import { BidModel } from "@/models/BidModel";
@@ -13,23 +12,23 @@ type BidsProps = {
 const Bids = ({house}: BidsProps) => { // (props: BidsProps); 
                                         //const house = props.house
     const { bids, loadingState, addBid } = useBids(house.id);
-    const [ isPending, startTransition] = useTransition();
-    const emptyBid = {
-        houseId: house.id,
-        bidder: "",
-        amount: 0
-    };
-
-    const [newBid, setNewBid] = useState(emptyBid);
 
     if(loadingState !== loadingStatus.loaded) {
         return <LoadingIndicator loadingState={loadingState} />;
     }
 
-    const onBidSubmitClick = () => {
-        //add newBid to state and persist to API
-        startTransition(async() => await addBid(newBid));
-        setNewBid(emptyBid);
+    // const onBidSubmitClick = () => {
+    //     //add newBid to state and persist to API
+    //     startTransition(async() => await addBid(newBid));
+    //     setNewBid(emptyBid);
+    // };
+
+    const bidSubmitAction = async (formData: FormData) => {
+        await addBid({
+            houseId: house.id,
+            bidder: formData.get("bidder") as string,
+            amount: Number(formData.get("amount")) 
+        });
     };
 
     return (
@@ -54,17 +53,13 @@ const Bids = ({house}: BidsProps) => { // (props: BidsProps);
                     </table>
                 </div>
             </div>
-            <div className="row">
+            <form action={bidSubmitAction} className="row">
                 <div className="col-5">
                     <input id="bidder"
                         className="h-100 form-control"
                         type="text"
-                        value={newBid.bidder}
-                        onChange={(e) => setNewBid({
-                            ...newBid,
-                            bidder: e.target.value
-                        })}
-                        placeholder="Bidder" 
+                        placeholder="Bidder"
+                        name="bidder"
                     />
                 </div>
                 <div className="col-5">
@@ -72,20 +67,16 @@ const Bids = ({house}: BidsProps) => { // (props: BidsProps);
                         id="amount"
                         className="h-100 form-control"
                         type="number"
-                        value={newBid.amount}
-                        onChange={(e) => setNewBid({
-                            ...newBid,
-                            amount: parseInt(e.target.value)
-                        })}
                         placeholder="Amount"
+                        name="amount"
                     />
                 </div>
                 <div className="col-2">
-                    <button className="btn btn-primary" disabled={isPending} onClick={onBidSubmitClick}>
+                    <button className="btn btn-primary" type="submit">
                        Add
                     </button>
                 </div>
-            </div>
+            </form>
         </>
     )
 }
